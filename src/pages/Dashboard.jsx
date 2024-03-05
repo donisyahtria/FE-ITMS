@@ -1,8 +1,8 @@
-import BasicCard from "./Card"
+import ChartComponent from "./Chart"
 
 const Dashboard = () => {
   return (
-    <BasicCard/>
+    <ChartComponent/>
   )
 }
 

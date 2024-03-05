@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import SignIn from "./pages/Login";
-import { Dashboard } from "@mui/icons-material";
+import Dashboard from "./pages/Dashboard";
 
 const router = createBrowserRouter ([
     {
