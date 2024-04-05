@@ -21,10 +21,11 @@ import notFoundImage from './notfound.png';
 import SecondCard from 'ui-component/cards/SecondCard';
 import SearchSection from 'layout/MainLayout/Header/SearchSection';
 import SearchSection2 from 'ui-component/SearchSection';
-import HorizontalLinearStepper from '../Stepper/EventBerjalan';
+import HorizontalLinearStepper from '../../../ui-component/Stepper/EventBerjalan';
+import AddEventModal from 'ui-component/modal/TambahEvent';
 
 
-// ==============================|| DEFAULT DASHBOARD ||============================== //
+// ==============================|| DAFTAR EVENT PAGE ||============================== //
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -38,7 +39,7 @@ function CustomTabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ pt: 3 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -91,40 +92,61 @@ const DaftarEvent = () => {
     console.log('Button clicked!');
   };
 
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       {/* <MainLayout /> */}
       
       <MainCard title="Daftar Event"  secondary={
         <Stack direction="row" spacing={2}>
-        <SearchSection2 /> 
+          <SearchSection2 /> 
 
-        <Button variant="contained" sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} endIcon={<AddCircleOutlineIcon />}>Tambah Event</Button>
-      </Stack>
-          }>
-  <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-    <Typography variant="h5"></Typography>
-  </Box>
-  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-      <Tab icon={<RotateRight />} iconPosition="start" label={<Typography>Berjalan </Typography>} {...a11yProps(0)} />
-      <Tab icon={<DownloadDone />} iconPosition="start" label="Selesai" {...a11yProps(1)} />
-    </Tabs>
-  </Box>
-  <CustomTabPanel value={value} index={0}>
-    <Container width='100%' align='center'>
-      <HorizontalLinearStepper/>
-      <img src={notFoundImage} alt="Deskripsi gambar" />
-      <Typography variant='h4' marginTop={2}> Tidak Ada Data </Typography>
+          <Button variant="contained" 
+          sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} 
+          endIcon={<AddCircleOutlineIcon />}
+          onClick={handleOpen}>
+            Tambah Event
+          </Button>
+        </Stack>
+      }>
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <Typography variant="h5"></Typography>
+        </Box>
+
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tab icon={<RotateRight />} iconPosition="start" label={<Typography>Berjalan </Typography>} {...a11yProps(0)} />
+            <Tab icon={<DownloadDone />} iconPosition="start" label="Selesai" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+
+        <CustomTabPanel value={value} index={0}>
+          <Container style={{width:'100%', align:'center', paddingLeft:0, paddingRight:0}}>
+            
+            <HorizontalLinearStepper />
+            
+            <img src={notFoundImage} alt="Deskripsi gambar" />
+            <Typography variant='h4' marginTop={2}> Tidak Ada Data </Typography>
+              {/* <Button variant="contained" sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} endIcon={<AddCircleOutlineIcon />}>Tambah Event</Button> */}
+            {/* <Button variant="contained" color="primary" onClick={handleButtonClick}>Klik Saya</Button> */}
+          </Container>
+
+        </CustomTabPanel>
+
+        <CustomTabPanel value={value} index={1}>
         {/* <Button variant="contained" sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} endIcon={<AddCircleOutlineIcon />}>Tambah Event</Button> */}
-      {/* <Button variant="contained" color="primary" onClick={handleButtonClick}>Klik Saya</Button> */}
-    </Container>
-
-  </CustomTabPanel>
-  <CustomTabPanel value={value} index={1}>
-  {/* <Button variant="contained" sx={{backgroundColor:'#1a2b5a', borderRadius:'15px'}} endIcon={<AddCircleOutlineIcon />}>Tambah Event</Button> */}
-  </CustomTabPanel>
-</MainCard>
+        </CustomTabPanel>
+        <AddEventModal open={open} handleClose={handleClose} />
+      </MainCard>
     </>
   );
 };
